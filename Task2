@@ -1,1 +1,41 @@
 
+#Ashin Johnson
+#task2:predict the optimum number of clusters and represent it visually
+#@GRIPJAN21
+#loading required packages
+library(stats)
+library(ggfortify)
+library(ggplot2)
+library(dplyr)
+#importing dataset
+dat=read.csv("C:/Users/user/documents/R/Iris.csv",row.names = 1)
+View(dat)
+#removing species column from the dataset
+dat1=dat[,-5]
+View(dat1)
+#checking for missing values
+sum(is.na(dat1))
+#finding optimum number of clusters for Kmeans
+k.max=10
+wss=rep(NA,k.max)
+nclust=list()
+for (i in 1:k.max) {
+  classes=kmeans(dat1,i)
+  wss[i]=classes$tot.withinss
+  nclust[[i]]=classes$size
+}
+#plotting within cluster sum of squares(WSS) vs cluster numbers(k) 
+plot(1:k.max,wss,
+     type = "b",pch=19,
+     xlab = "number of clusters k",
+     ylab = "total withinss")
+#from the plot,obvious that from k=3 the wss value changing negligibly which means optimum number of cluster is k=3
+dat2=kmeans(dat1,3)
+table(dat$Species,dat2$cluster)
+#plotting the clusters
+#checking cluster center values not overlapping
+autoplot(dat2,dat1,frame=TRUE)
+#also from cluster centers
+dat2$centers
+#clusters are distinct
+#Thank you...........
