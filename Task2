@@ -14,7 +14,7 @@ View(dat)
 dat1=dat[,-5]
 View(dat1)
 #checking for missing values
-sum(is.na(dat1))
+which(is.na(dat1))
 #finding optimum number of clusters for Kmeans
 k.max=10
 wss=rep(NA,k.max)
